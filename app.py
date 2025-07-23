@@ -12,15 +12,15 @@ from torchvision import transforms
 # from pokemon_zukan import classestrans
 import requests
 
-MODEL_URL = "https://huggingface.co/reikikuchi0227/pokemon-machine-learning/tree/main/model.pth"
-MODEL_PATH = "model.pth"
+# MODEL_URL = "https://huggingface.co/reikikuchi0227/pokemon-machine-learning/tree/main/model.pth"
+# MODEL_PATH = "model.pth"
 
-def download_model():
-    if not os.path.exists(MODEL_PATH):
-        print("モデルをダウンロード中...")
-        r = requests.get(MODEL_URL)
-        with open(MODEL_PATH, 'wb') as f:
-            f.write(r.content)
+# def download_model():
+#     if not os.path.exists(MODEL_PATH):
+#         print("モデルをダウンロード中...")
+#         r = requests.get(MODEL_URL)
+#         with open(MODEL_PATH, 'wb') as f:
+#             f.write(r.content)
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
