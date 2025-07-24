@@ -7,7 +7,7 @@
 <body>
   <h1>分類結果</h1>
   <p>このポケモンは「{{ label }}」です！</p>
-  <img src="{{ url_for('static', filename='../uploads/' + filename) }}" width="300">
+  {% comment %} <img src="{{ url_for('static', filename='../uploads/' + filename) }}" width="300"> {% endcomment %}
   <br><a href="/">戻る</a>
 </body>
 </html>

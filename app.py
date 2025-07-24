@@ -6,21 +6,11 @@ from PIL import Image
 import torch
 import torchvision.models as models
 import torch.nn as nn
-# from predict import predict_image, load_model
+from predict import predict_image
 import os
 from torchvision import transforms
 # from pokemon_zukan import classestrans
 import requests
-
-# MODEL_URL = "https://huggingface.co/reikikuchi0227/pokemon-machine-learning/tree/main/model.pth"
-# MODEL_PATH = "model.pth"
-
-# def download_model():
-#     if not os.path.exists(MODEL_PATH):
-#         print("モデルをダウンロード中...")
-#         r = requests.get(MODEL_URL)
-#         with open(MODEL_PATH, 'wb') as f:
-#             f.write(r.content)
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
@@ -181,7 +171,7 @@ classes = [
 ]
 
 # モデル読み込み
-model = models.vgg16_bn(weights=None)
+model = models.vgg16_bn(pretrained=False)
 model.classifier[6] = nn.Linear(4096, len(classes))
 model.load_state_dict(torch.load("model.pth", map_location="cpu"))
 model.eval()
@@ -202,13 +192,7 @@ def predict():
     path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(path)
 
-    image = Image.open(path).convert("RGB")
-    input_tensor = transform(image).unsqueeze(0)
-
-    with torch.no_grad():
-        outputs = model(input_tensor)
-        _, predicted = torch.max(outputs, 1)
-        label = classes[predicted.item()]
+    label = predict_image(path, model, classes, device="cpu")
 
     return render_template('result.html', label=label, filename=file.filename)
 
