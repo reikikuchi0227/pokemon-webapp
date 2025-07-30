@@ -1,0 +1,9 @@
+streamlit
+torch
+torchvision
+Pillow
+japanize_matplotlib
+matplotlib
+numpy
+flask
+gunicorn

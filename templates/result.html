@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>結果</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>分類結果</h1>
+  <p>このポケモンは「{{ label }}」です！</p>
+  {% comment %} <img src="{{ url_for('static', filename='../uploads/' + filename) }}" width="300"> {% endcomment %}
+  <br><a href="/">戻る</a>
+</body>
+</html>
