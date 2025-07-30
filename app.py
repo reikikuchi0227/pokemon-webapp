@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from PIL import Image
 import torch
 import torchvision.models as models
+from torchvision.models import MobileNet_V2_Weights
 import torch.nn as nn
 from predict import predict_image
 import os
@@ -184,8 +185,12 @@ classes = ['006_Charizard',
 # ]
 
 # モデル読み込み
-model = models.vgg16_bn(pretrained=False)
-model.classifier[6] = nn.Linear(4096, len(classes))
+# VGG16の場合
+# model = models.vgg16_bn(pretrained=False)
+# model.classifier[6] = nn.Linear(4096, len(classes))
+# MobileNet2の場合
+model = models.mobilenet_v2(weights=MobileNet_V2_Weights.DEFAULT) # 事前学習済みモデル
+model.classifier[1] = nn.Linear(model.last_channel, len(classes)) # 出力層を調整
 model.load_state_dict(torch.load("model.pth", map_location="cpu"))
 model.eval()
 
